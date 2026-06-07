@@ -271,6 +271,28 @@ local Slider = Tab:Slider({
         _G.HeadSize = value
     end
 })
+local Button = Tab:Button({
+    Title = "Click Me",
+    Callback = function()
+    local old
+old = hookmetamethod(game, "__namecall", function(self, ...)
+    local args = {...}
+    local method = getnamecallmethod()
+
+    if method == "FireServer"
+    and tostring(self) == "Attack_Server"
+    and args[4]
+    and type(args[4]) == "table" then
+
+        args[4].BaseDamage = {math.huge, math.huge}
+        return old(self, unpack(args))
+    end
+
+    return old(self, ...)
+end)
+    end
+})
+
 local Tab = Window:Tab({
     Title = "ESP",
     Desc = "Tab description", -- optional
@@ -717,25 +739,4 @@ local Toggle = Tab:Toggle({
 			RemoveHighlight()
 		end
 	end
-})
-local Button = Tab:Button({
-    Title = "Click Me",
-    Callback = function()
-    local old
-old = hookmetamethod(game, "__namecall", function(self, ...)
-    local args = {...}
-    local method = getnamecallmethod()
-
-    if method == "FireServer"
-    and tostring(self) == "Attack_Server"
-    and args[4]
-    and type(args[4]) == "table" then
-
-        args[4].BaseDamage = {math.huge, math.huge}
-        return old(self, unpack(args))
-    end
-
-    return old(self, ...)
-end)
-    end
 })
