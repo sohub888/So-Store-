@@ -292,7 +292,90 @@ old = hookmetamethod(game, "__namecall", function(self, ...)
 end)
     end
 })
+--------------------------------------------------
+-- STATE
+--------------------------------------------------
+local enabled = false
+local equippedTools = {}
+local holdConnection
 
+--------------------------------------------------
+-- TOOL FUNCTIONS
+--------------------------------------------------
+local function clearTools()
+	if holdConnection then
+		holdConnection:Disconnect()
+		holdConnection = nil
+	end
+
+	for _, tool in ipairs(equippedTools) do
+		if tool and tool.Parent then
+			tool.Parent = player.Backpack
+		end
+	end
+
+	table.clear(equippedTools)
+end
+
+local function equipAllTools()
+	if not character then return end
+
+	for _, tool in ipairs(player.Backpack:GetChildren()) do
+		if tool:IsA("Tool") then
+			tool.Parent = character
+
+			if not table.find(equippedTools, tool) then
+				table.insert(equippedTools, tool)
+			end
+		end
+	end
+end
+
+local function startHolding()
+	if holdConnection then
+		holdConnection:Disconnect()
+	end
+
+	holdConnection = game:GetService("RunService").Heartbeat:Connect(function()
+		if not enabled or not character then
+			return
+		end
+
+		for _, tool in ipairs(player.Backpack:GetChildren()) do
+			if tool:IsA("Tool") then
+				tool.Parent = character
+			end
+		end
+
+		for _, tool in ipairs(equippedTools) do
+			if tool and tool.Parent ~= character then
+				tool.Parent = character
+			end
+		end
+	end)
+end
+
+--------------------------------------------------
+-- TOGGLE
+--------------------------------------------------
+local Toggle = Tab:Toggle({
+	Title = "Hold Knife",
+	Desc = "Hold tool forever",
+	Icon = "power",
+	Value = false,
+	Flag = "hold_knife",
+
+	Callback = function(state)
+		enabled = state
+
+		if state then
+			equipAllTools()
+			startHolding()
+		else
+			clearTools()
+		end
+	end
+})
 local Tab = Window:Tab({
     Title = "ESP",
     Desc = "Tab description", -- optional
