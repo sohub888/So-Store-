@@ -272,7 +272,7 @@ local Slider = Tab:Slider({
     end
 })
 local Button = Tab:Button({
-    Title = "Click Me",
+    Title = "kill 1",
     Callback = function()
     local old
 old = hookmetamethod(game, "__namecall", function(self, ...)
