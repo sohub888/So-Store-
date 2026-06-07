@@ -1,0 +1,721 @@
+local _version = "1.6.64-fix"
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/download/" .. _version .. "/main.lua"))() 
+local Window = WindUI:CreateWindow({
+    Title = "SO STORE || Premium", -- window title
+    Icon = "rat", -- lucide icon or "rbxassetid://" or URL. optional
+    Author = "by .dev77777.", -- window subtitle. optional
+    Size = UDim2.fromOffset(400, 300), -- window size
+})
+local Tab = Window:Tab({
+    Title = "Menu",
+    Desc = "Tab description", -- optional
+    Icon = "book-text", -- lucide icon or "rbxassetid://" or URL. optional
+    IconColor = Color3.fromRGB(255, 255, 255), -- custom icon color. optional
+    IconShape = "Square", -- "Square" or "Circle". optional
+    IconThemed = true, -- use theme colors. optional
+    Locked = false, -- disable tab interaction. optional
+    ShowTabTitle = false, -- show title inside tab. optional
+    Border = true, -- add border around tab. optional
+    CustomEmptyPage = { -- custom empty page when no elements are added to the tab. optional
+		Icon = "lucide:smile", -- icon for empty page. optional
+		Title = "This is a cool empty tab", -- title for empty page. optional
+		Desc = "I like it. its so great tab with cool 'custom empty page'", -- description for empty page. optional
+	},
+})
+Window:ToggleTransparency(true)
+-- your tag
+local FPSTag = Window:Tag({
+    Title = "FPS: 0",
+    Color = Color3.fromRGB(100, 150, 255),
+})
+ 
+local RunService = game:GetService("RunService")
+local lastUpdate = tick()
+local frameCount = 0
+ 
+RunService.RenderStepped:Connect(function()
+    frameCount = frameCount + 1
+    local now = tick()
+    
+    if now - lastUpdate >= 1 then
+        local fps = math.floor(frameCount / (now - lastUpdate))
+        FPSTag:SetTitle("FPS: " .. fps)
+        
+        if fps >= 50 then
+            FPSTag:SetColor(Color3.fromRGB(0, 255, 0)) -- Green
+        elseif fps >= 30 then
+            FPSTag:SetColor(Color3.fromRGB(255, 200, 0)) -- Yellow
+        else
+            FPSTag:SetColor(Color3.fromRGB(255, 0, 0)) -- Red
+        end
+        
+        
+        frameCount = 0
+        lastUpdate = now
+    end
+end)
+local PingTag = Window:Tag({
+    Title = "Ping: 0ms",
+    Color = Color3.fromRGB(100, 200, 255),
+})
+ 
+task.spawn(function()
+    while true do
+        local success, ping = pcall(function()
+            local Stats = game:GetService("Stats")
+            local pingValue = Stats.Network.ServerStatsItem["Data Ping"]:GetValue()
+            return math.floor(pingValue)
+        end)
+        
+        if success and ping then
+            PingTag:SetTitle("Ping: " .. ping .. "ms")
+            
+            if ping <= 50 then
+                PingTag:SetColor(Color3.fromRGB(0, 255, 0)) -- Green
+            elseif ping <= 100 then
+                PingTag:SetColor(Color3.fromRGB(255, 200, 0)) -- Yellow
+            elseif ping <= 200 then
+                PingTag:SetColor(Color3.fromRGB(255, 150, 0)) -- Orange
+            else
+                PingTag:SetColor(Color3.fromRGB(255, 0, 0)) -- Red
+            end
+        end
+        
+        task.wait(2)
+    end
+end)
+Window:Tag({
+    Title = "v1.0",
+    Icon = "",
+    Color = Color3.fromHex("#CC0000"),
+    Radius = 13, -- from 0 to 13
+})
+
+local Group = Tab:Group({})
+
+Group:Button({
+    Title = "เปิดบายพาส",
+    Callback = function()
+if not game:IsLoaded() then game.Loaded:Wait() end
+
+local Players = game:GetService('Players')
+local Client = Players.LocalPlayer
+local g = getinfo or debug.getinfo
+local d = false
+local h = {}
+
+local x, y
+
+setthreadidentity(2)
+
+for i, v in getgc(true) do
+    if typeof(v) == "table" then
+        local a = rawget(v, "Detected")
+        local b = rawget(v, "Kill")
+    
+        if typeof(a) == "function" and not x then
+            x = a
+            
+            local o; o = hookfunction(x, function(c, f, n)
+                if c ~= "_" then
+                    if d then
+                        warn(`Adonis AntiCheat flagged\nMethod: {c}\nInfo: {f}`)
+                    end
+                end
+                
+                return true
+            end)
+
+            table.insert(h, x)
+        end
+
+        if rawget(v, "Variables") and rawget(v, "Process") and typeof(b) == "function" and not y then
+            y = b
+            local o; o = hookfunction(y, function(f)
+                if d then
+                    warn(`Adonis AntiCheat tried to kill (fallback): {f}`)
+                end
+            end)
+
+            table.insert(h, y)
+        end
+    end
+end
+
+local o; o = hookfunction(getrenv().debug.info, newcclosure(function(...)
+    local a, f = ...
+
+    if x and a == x then
+        if d then
+            warn(`zins | adonis bypassed`)
+        end
+
+        return coroutine.yield(coroutine.running())
+    end
+    
+    return o(...)
+end))
+
+setthreadidentity(7)
+
+
+local hookmetamethods = clonefunction(getfenv().hookmetamethod)
+local newcclosures = clonefunction(newcclosure)
+local old
+old = hookmetamethods(game, "__namecall", newcclosures(function(self, ...)
+    local method = getnamecallmethod()
+    local args = {...}
+
+    -- เน€เธยเน€เธเธ‘เน€เธย Kick
+    if method == "Kick" then
+        return nil
+    end
+
+    return old(self, ...)
+end))
+
+Client.PlayerScripts.araikordai:Destroy()
+
+    end
+})
+
+Group:Button({
+    Title = "ปิดฮิตบล็อค",
+    Callback = function()
+        _G.HeadSize = 0
+_G.Disabled = true
+game:GetService('RunService').RenderStepped:connect(function()
+if _G.Disabled then
+for i,v in next, game:GetService('Players'):GetPlayers() do
+if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+pcall(function()
+v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+v.Character.HumanoidRootPart.Transparency = 0.7
+v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really black")
+v.Character.HumanoidRootPart.Material = "Neon"
+v.Character.HumanoidRootPart.CanCollide = false
+end)
+end
+end
+end
+end)
+    end
+})
+
+_G.HeadSize = 20
+_G.Disabled = false
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+RunService.RenderStepped:Connect(function()
+    if _G.Disabled then
+        for _,v in pairs(Players:GetPlayers()) do
+            if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+                pcall(function()
+                    local hrp = v.Character.HumanoidRootPart
+
+                    hrp.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+                    hrp.Transparency = 0.7
+                    hrp.BrickColor = BrickColor.new("Really black")
+                    hrp.Material = Enum.Material.Neon
+                    hrp.CanCollide = false
+                end)
+            end
+        end
+    end
+end)
+
+local Toggle = Tab:Toggle({
+    Title = "Hitbox Expander",
+    Desc = "",
+    Icon = "power",
+    Value = false,
+    Flag = "hitbox_toggle",
+
+    Callback = function(state)
+        _G.Disabled = state
+
+        -- ปิดแล้วคืนค่าเดิม
+        if not state then
+            for _,v in pairs(Players:GetPlayers()) do
+                if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+                    pcall(function()
+                        local hrp = v.Character.HumanoidRootPart
+
+                        hrp.Size = Vector3.new(2,2,1)
+                        hrp.Transparency = 1
+                        hrp.Material = Enum.Material.Plastic
+                        hrp.CanCollide = false
+                    end)
+                end
+            end
+        end
+    end
+})
+_G.HeadSize = 20
+
+local Slider = Tab:Slider({
+    Title = "Hitbox Size",
+    Desc = "",
+    Value = {
+        Min = 2,
+        Max = 50,
+        Default = 20
+    },
+    Step = 1,
+    Flag = "hitbox_size",
+
+    Callback = function(value)
+        _G.HeadSize = value
+    end
+})
+local Tab = Window:Tab({
+    Title = "ESP",
+    Desc = "Tab description", -- optional
+    Icon = "eye", -- lucide icon or "rbxassetid://" or URL. optional
+    IconColor = Color3.fromRGB(255, 255, 255), -- custom icon color. optional
+    IconShape = "Square", -- "Square" or "Circle". optional
+    IconThemed = true, -- use theme colors. optional
+    Locked = false, -- disable tab interaction. optional
+    ShowTabTitle = false, -- show title inside tab. optional
+    Border = true, -- add border around tab. optional
+    CustomEmptyPage = { -- custom empty page when no elements are added to the tab. optional
+		Icon = "lucide:smile", -- icon for empty page. optional
+		Title = "This is a cool empty tab", -- title for empty page. optional
+		Desc = "I like it. its so great tab with cool 'custom empty page'", -- description for empty page. optional
+	},
+})
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local ESPEnabled = false
+local Connections = {}
+local ESPObjects = {}
+
+local function CreateLine()
+    local Line = Drawing.new("Line")
+    Line.Color = Color3.fromRGB(255,255,255)
+    Line.Thickness = 1.5
+    Line.Transparency = 1
+    return Line
+end
+
+local function RemoveESP()
+    for _,v in pairs(ESPObjects) do
+        for _,line in pairs(v) do
+            line:Remove()
+        end
+    end
+    ESPObjects = {}
+
+    for _,c in pairs(Connections) do
+        c:Disconnect()
+    end
+    Connections = {}
+end
+
+local function AddESP(Player)
+    if Player == LocalPlayer then return end
+
+    local Lines = {}
+    for i = 1,12 do
+        Lines[i] = CreateLine()
+    end
+
+    ESPObjects[Player] = Lines
+
+    local Connection
+    Connection = RunService.RenderStepped:Connect(function()
+        if not ESPEnabled then
+            for _,Line in ipairs(Lines) do
+                Line.Visible = false
+            end
+            return
+        end
+
+        local Character = Player.Character
+        local Root = Character and Character:FindFirstChild("HumanoidRootPart")
+
+        if not Root then
+            for _,Line in ipairs(Lines) do
+                Line.Visible = false
+            end
+            return
+        end
+
+        local Size = Vector3.new(2,3,1)
+
+        local Corners = {
+            Vector3.new(-Size.X,-Size.Y,-Size.Z),
+            Vector3.new(Size.X,-Size.Y,-Size.Z),
+            Vector3.new(Size.X,Size.Y,-Size.Z),
+            Vector3.new(-Size.X,Size.Y,-Size.Z),
+
+            Vector3.new(-Size.X,-Size.Y,Size.Z),
+            Vector3.new(Size.X,-Size.Y,Size.Z),
+            Vector3.new(Size.X,Size.Y,Size.Z),
+            Vector3.new(-Size.X,Size.Y,Size.Z),
+        }
+
+        local ScreenCorners = {}
+
+        for i,v in ipairs(Corners) do
+            local Pos, Visible = Camera:WorldToViewportPoint(
+                Root.CFrame:PointToWorldSpace(v)
+            )
+
+            if not Visible then
+                for _,Line in ipairs(Lines) do
+                    Line.Visible = false
+                end
+                return
+            end
+
+            ScreenCorners[i] = Vector2.new(Pos.X, Pos.Y)
+        end
+
+        local Edges = {
+            {1,2},{2,3},{3,4},{4,1},
+            {5,6},{6,7},{7,8},{8,5},
+            {1,5},{2,6},{3,7},{4,8}
+        }
+
+        for i,Edge in ipairs(Edges) do
+            local A = ScreenCorners[Edge[1]]
+            local B = ScreenCorners[Edge[2]]
+
+            Lines[i].From = A
+            Lines[i].To = B
+            Lines[i].Visible = true
+        end
+    end)
+
+    table.insert(Connections, Connection)
+end
+
+-- Toggle
+local Toggle = Tab:Toggle({
+    Title = "3D Box ESP",
+    Desc = "ESP Box 3D",
+    Icon = "box",
+    Value = false,
+    Flag = "3D_Box_ESP",
+    Callback = function(state)
+        ESPEnabled = state
+
+        if state then
+            for _,Player in ipairs(Players:GetPlayers()) do
+                if not ESPObjects[Player] then
+                    AddESP(Player)
+                end
+            end
+        else
+            RemoveESP()
+        end
+    end
+})
+
+Players.PlayerAdded:Connect(function(Player)
+    if ESPEnabled then
+        AddESP(Player)
+    end
+end)
+local Tab = Window:Tab({
+    Title = "Settings",
+    Desc = "Tab description", -- optional
+    Icon = "settings", -- lucide icon or "rbxassetid://" or URL. optional
+    IconColor = Color3.fromRGB(255, 255, 255), -- custom icon color. optional
+    IconShape = "Square", -- "Square" or "Circle". optional
+    IconThemed = true, -- use theme colors. optional
+    Locked = false, -- disable tab interaction. optional
+    ShowTabTitle = false, -- show title inside tab. optional
+    Border = true, -- add border around tab. optional
+    CustomEmptyPage = { -- custom empty page when no elements are added to the tab. optional
+		Icon = "lucide:smile", -- icon for empty page. optional
+		Title = "This is a cool empty tab", -- title for empty page. optional
+		Desc = "I like it. its so great tab with cool 'custom empty page'", -- description for empty page. optional
+	},
+})
+Window:Section({
+    Title = "ขอบคุณที่ใช้บริการ"
+})
+local SelectedColor = Color3.fromRGB(255, 100, 100)
+getgenv().ForceFieldCharacter = false
+
+--------------------------------------------------
+-- COLOR PICKER
+--------------------------------------------------
+
+local Colorpicker = Tab:Colorpicker({
+    Title = "Character Color",
+    Desc = "ForceField Color",
+    Default = SelectedColor,
+    Locked = false,
+    Flag = "character_forcefield_color",
+
+    Callback = function(color)
+        SelectedColor = color
+
+        if getgenv().ForceFieldCharacter then
+            local Character = game.Players.LocalPlayer.Character
+
+            if Character then
+                for _, v in ipairs(Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.Material = Enum.Material.ForceField
+                        v.Color = SelectedColor
+                    end
+                end
+            end
+        end
+    end
+})
+
+--------------------------------------------------
+-- TOGGLE
+--------------------------------------------------
+
+local Toggle = Tab:Toggle({
+    Title = "ForceField Character",
+    Desc = "",
+    Default = false,
+    Callback = function(state)
+        getgenv().ForceFieldCharacter = state
+
+        if state then
+            task.spawn(function()
+                while getgenv().ForceFieldCharacter do
+                    local Player = game.Players.LocalPlayer
+                    local Character = Player.Character
+
+                    if Character then
+                        for _, v in ipairs(Character:GetDescendants()) do
+                            if v:IsA("BasePart") then
+                                v.Material = Enum.Material.ForceField
+                                v.Color = SelectedColor
+                            end
+                        end
+                    end
+
+                    task.wait(0.2)
+                end
+            end)
+        else
+            local Character = game.Players.LocalPlayer.Character
+
+            if Character then
+                for _, v in ipairs(Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.Material = Enum.Material.Plastic
+                    end
+                end
+            end
+        end
+    end
+})
+
+--------------------------------------------------
+-- RESPAWN SUPPORT
+--------------------------------------------------
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(Character)
+    Character:WaitForChild("HumanoidRootPart")
+
+    task.wait(1)
+
+    if getgenv().ForceFieldCharacter then
+        for _, v in ipairs(Character:GetDescendants()) do
+            if v:IsA("BasePart") then
+                v.Material = Enum.Material.ForceField
+                v.Color = SelectedColor
+            end
+        end
+    end
+end)
+-- SERVICES
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local LocalPlayer = Players.LocalPlayer
+local Backpack = LocalPlayer:WaitForChild("Backpack")
+
+-- VARIABLES
+local HighlightEnabled = false
+local HighlightObject = nil
+local CurrentTool = nil
+local RainbowThread = 0
+
+local RainbowColors = {
+	Color3.fromRGB(255, 0, 0),
+	Color3.fromRGB(255, 127, 0),
+	Color3.fromRGB(255, 255, 0),
+	Color3.fromRGB(0, 255, 0),
+	Color3.fromRGB(0, 255, 255),
+	Color3.fromRGB(0, 0, 255),
+	Color3.fromRGB(148, 0, 211)
+}
+
+--------------------------------------------------
+-- FUNCTIONS
+--------------------------------------------------
+
+local function RemoveHighlight()
+	if HighlightObject then
+		HighlightObject:Destroy()
+		HighlightObject = nil
+	end
+end
+
+local function CreateHighlight(Tool)
+	if not Tool then
+		return
+	end
+
+	RemoveHighlight()
+
+	local Highlight = Instance.new("Highlight")
+	Highlight.Name = "RGBHighlight"
+	Highlight.Adornee = Tool
+	Highlight.FillTransparency = 0.2
+	Highlight.OutlineTransparency = 0
+	Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+	Highlight.Parent = Tool
+
+	HighlightObject = Highlight
+end
+
+local function GetCurrentTool()
+	local Character = LocalPlayer.Character
+
+	if Character then
+		local Tool = Character:FindFirstChildOfClass("Tool")
+		if Tool then
+			return Tool
+		end
+	end
+
+	return Backpack:FindFirstChildOfClass("Tool")
+end
+
+local function StartRainbow()
+	RainbowThread += 1
+	local ThreadId = RainbowThread
+
+	task.spawn(function()
+		local Index = 1
+
+		while HighlightEnabled and ThreadId == RainbowThread do
+			if HighlightObject and HighlightObject.Parent then
+				local Color = RainbowColors[Index]
+
+				local Tween = TweenService:Create(
+					HighlightObject,
+					TweenInfo.new(0.15, Enum.EasingStyle.Linear),
+					{
+						FillColor = Color,
+						OutlineColor = Color
+					}
+				)
+
+				Tween:Play()
+
+				Index += 1
+				if Index > #RainbowColors then
+					Index = 1
+				end
+			end
+
+			task.wait(0.15)
+		end
+	end)
+end
+
+local function UpdateTool()
+	if not HighlightEnabled then
+		return
+	end
+
+	local Tool = GetCurrentTool()
+
+	if Tool ~= CurrentTool then
+		CurrentTool = Tool
+
+		if Tool then
+			CreateHighlight(Tool)
+		else
+			RemoveHighlight()
+		end
+	end
+end
+
+--------------------------------------------------
+-- TOOL DETECTION
+--------------------------------------------------
+
+local function SetupCharacter(Character)
+	Character.ChildAdded:Connect(function(Child)
+		if Child:IsA("Tool") then
+			task.wait()
+			UpdateTool()
+		end
+	end)
+
+	Character.ChildRemoved:Connect(function(Child)
+		if Child:IsA("Tool") then
+			task.wait()
+			UpdateTool()
+		end
+	end)
+end
+
+if LocalPlayer.Character then
+	SetupCharacter(LocalPlayer.Character)
+end
+
+LocalPlayer.CharacterAdded:Connect(SetupCharacter)
+
+Backpack.ChildAdded:Connect(function()
+	task.wait()
+	UpdateTool()
+end)
+
+Backpack.ChildRemoved:Connect(function()
+	task.wait()
+	UpdateTool()
+end)
+
+--------------------------------------------------
+-- TOGGLE
+--------------------------------------------------
+
+local Toggle = Tab:Toggle({
+	Title = "RGB Tool Highlight",
+	Desc = "",
+	Icon = "power",
+	Value = false,
+	Type = "Toggle",
+	Locked = false,
+	Flag = "RGBToolHighlight",
+
+	Callback = function(State)
+		HighlightEnabled = State
+
+		if State then
+			CurrentTool = GetCurrentTool()
+
+			if CurrentTool then
+				CreateHighlight(CurrentTool)
+				StartRainbow()
+			end
+		else
+			RainbowThread += 1
+			CurrentTool = nil
+			RemoveHighlight()
+		end
+	end
+})
+
