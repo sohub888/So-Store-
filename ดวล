@@ -1,24 +1,4 @@
-local _version = "1.6.64-fix"
-local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/download/" .. _version .. "/main.lua"))() 
-local Window = WindUI:CreateWindow({
-    Title = "SO STORE || Premium", -- window title
-    Icon = "rat", -- lucide icon or "rbxassetid://" or URL. optional
-    Author = "by .dev77777.", -- window subtitle. optional
-    Size = UDim2.fromOffset(400, 300), -- window size
-})
-local Tab = Window:Tab({
-    Title = "Menu",
-    Desc = "Tab description", -- optional
-    Icon = "book-text", -- lucide icon or "rbxassetid://" or URL. optional
-    IconColor = Color3.fromRGB(255, 255, 255), -- custom icon color. optional
-    IconShape = "Square", -- "Square" or "Circle". optional
-    IconThemed = true, -- use theme colors. optional
-    Locked = false, -- disable tab interaction. optional
-    ShowTabTitle = false, -- show title inside tab. optional
-    Border = true, -- add border around tab. optional
-    CustomEmptyPage = { -- custom empty page when no elements are added to the tab. optional
-		Icon = "lucide:smile", -- icon for empty page. optional
-		Title = "This is a cool empty tab", -- title for empty page. optional
+", -- title for empty page. optional
 		Desc = "I like it. its so great tab with cool 'custom empty page'", -- description for empty page. optional
 	},
 })
