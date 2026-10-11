@@ -4,11 +4,11 @@ WindUI:AddTheme({
 Name = "Moon Space",
 Accent = Color3.fromHex("#000000"),
 Background = Color3.fromHex("#990000"),
-Text = Color3.fromHex("#FF0000"),
+Text = Color3.fromHex("#FFFFFF"),
 Placeholder = Color3.fromHex("#FF0000"),
 Button = Color3.fromHex("#FF0000"),
 Icon = Color3.fromHex("#FFFFFF"),
-Hover = Color3.fromHex("#ffffff"),
+Hover = Color3.fromHex("#FF0000"),
 WindowBackground = Color3.fromHex("#000000"),
 WindowShadow = Color3.fromHex("#000000"),
 })
