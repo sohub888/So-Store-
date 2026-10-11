@@ -8,7 +8,7 @@ Text = Color3.fromHex("#FFFFFF"),
 Placeholder = Color3.fromHex("#FFFFFF"),
 Button = Color3.fromHex("#FF0000"),
 Icon = Color3.fromHex("#FFFFFF"),
-Hover = Color3.fromHex("#FF0000"),
+Hover = Color3.fromHex("#FFFFFF"),
 WindowBackground = Color3.fromHex("#000000"),
 WindowShadow = Color3.fromHex("#000000"),
 })
